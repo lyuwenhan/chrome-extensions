@@ -21,6 +21,7 @@ body {
 	margin-bottom: 6px
 }
 .ip {
+	font-family: ui-monospace, SFMono-Regular, SF Mono, Menlo, Consolas, Liberation Mono, monospace;
 	font-size: 18px;
 	font-weight: 600;
 	letter-spacing: .5px;
