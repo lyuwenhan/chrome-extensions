@@ -57,7 +57,7 @@ for (const dir of dirs) {
 		console.error(`Failed processing ${dir}: ${err.message}`)
 	}
 }
-fs.writeFileSync(versionsPath, JSON.stringify(versions, null, "\t") + "\n", "utf8");
+fs.writeFileSync(versionsPath, JSON.stringify(versions) + "\n", "utf8");
 if (hasError) {
 	process.exit(1)
 }
