@@ -47,12 +47,30 @@ for (const dir of dirs) {
 			let hasIcon = false;
 			const icon128Path = path.join(extPath, "icons", "icon128.png");
 			if (fs.existsSync(icon128Path)) {
-				const targetIcon = path.join(extensionsDir, "icon.png");
-				fs.copyFileSync(icon128Path, targetIcon);
-				console.log(`Icon copied: ${icon128Path} -> ${targetIcon}`);
+				const targetPath = path.join(extensionsDir, "icon.png");
+				fs.copyFileSync(icon128Path, targetPath);
+				console.log(`Icon copied: ${icon128Path} -> ${targetPath}`);
 				hasIcon = true
 			} else {
 				console.warn(`icon128.png not found for ${dir}`)
+			}
+			const readmePath = path.join(extPath, "README.md");
+			if (fs.existsSync(readmePath)) {
+				const targetPath = path.join(extensionsDir, "README.md");
+				fs.copyFileSync(readmePath, targetPath);
+				console.log(`Icon copied: ${readmePath} -> ${targetPath}`);
+				hasIcon = true
+			} else {
+				console.warn(`README.md not found for ${dir}`)
+			}
+			const privacyPath = path.join(extPath, "PRIVACY.md");
+			if (fs.existsSync(privacyPath)) {
+				const targetPath = path.join(extensionsDir, "PRIVACY.md");
+				fs.copyFileSync(privacyPath, targetPath);
+				console.log(`Icon copied: ${privacyPath} -> ${targetPath}`);
+				hasIcon = true
+			} else {
+				console.warn(`PRIVACY.md not found for ${dir}`)
 			}
 			const manifest = JSON.parse(fs.readFileSync(manifestPath, "utf8"));
 			const version = manifest.version;
