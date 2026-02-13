@@ -45,7 +45,6 @@ for (const dir of dirs) {
 			fs.mkdirSync(extensionsDir, {
 				recursive: true
 			});
-			const manifestPath = path.join(extPath, "manifest.json");
 			let hasIcon = false;
 			const icon128Path = path.join(extPath, "icons", "icon128.png");
 			if (fs.existsSync(icon128Path)) {
@@ -65,6 +64,7 @@ for (const dir of dirs) {
 			} else {
 				console.warn(`README.md not found for ${dir}`)
 			}
+			const manifestPath = path.join(extPath, "manifest.json");
 			const manifest = JSON.parse(fs.readFileSync(manifestPath, "utf8"));
 			const version = manifest.version;
 			const displayName = manifest.name;
