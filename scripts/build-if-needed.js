@@ -29,11 +29,13 @@ for (const dir of dirs) {
 	try {
 		console.log(`Processing ${dir}...`);
 		const extensionsDir = path.join(dataDir, dir);
-		if (!fs.existsSync(extensionsDir)) {
-			fs.mkdirSync(extensionsDir, {
-				recursive: true
-			})
-		}
+		fs.rmSync(extensionsDir, {
+			recursive: true,
+			force: true
+		});
+		fs.mkdirSync(extensionsDir, {
+			recursive: true
+		});
 		const extPath = path.join(root, dir);
 		const statusPath = path.join(extPath, "status.json");
 		let status = {};
@@ -62,15 +64,6 @@ for (const dir of dirs) {
 				hasIcon = true
 			} else {
 				console.warn(`README.md not found for ${dir}`)
-			}
-			const privacyPath = path.join(extPath, "PRIVACY.md");
-			if (fs.existsSync(privacyPath)) {
-				const targetPath = path.join(extensionsDir, "PRIVACY.md");
-				fs.copyFileSync(privacyPath, targetPath);
-				console.log(`Icon copied: ${privacyPath} -> ${targetPath}`);
-				hasIcon = true
-			} else {
-				console.warn(`PRIVACY.md not found for ${dir}`)
 			}
 			const manifest = JSON.parse(fs.readFileSync(manifestPath, "utf8"));
 			const version = manifest.version;
