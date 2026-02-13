@@ -36,12 +36,19 @@ for (const dir of dirs) {
 			console.log(`New extension detected: ${dir}`);
 			versions[dir] = {
 				version,
+				versions,
 				href: "",
 				displayName,
 				description
 			}
 		} else {
 			versions[dir].version = version;
+			if (!versions[dir].versions) {
+				versions[dir].versions = []
+			}
+			if (versions[dir].versions.at(-1) !== version) {
+				versions[dir].versions.push(version)
+			}
 			versions[dir].displayName = displayName;
 			versions[dir].description = description
 		}
