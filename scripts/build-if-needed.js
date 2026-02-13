@@ -4,7 +4,7 @@ const {
 	execSync
 } = require("child_process");
 const root = process.cwd();
-const excluded = [".git", ".github", "extensions", "node_modules", "scripts"];
+const excluded = [".git", ".github", "docs", "node_modules", "scripts"];
 const dataDir = path.join(root, "docs");
 if (!fs.existsSync(dataDir)) {
 	fs.mkdirSync(dataDir, {
