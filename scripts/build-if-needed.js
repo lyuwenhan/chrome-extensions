@@ -59,7 +59,7 @@ for (const dir of dirs) {
 			if (fs.existsSync(readmePath)) {
 				const targetPath = path.join(extensionsDir, "README.md");
 				fs.copyFileSync(readmePath, targetPath);
-				console.log(`Icon copied: ${readmePath} -> ${targetPath}`);
+				console.log(`README copied: ${readmePath} -> ${targetPath}`);
 				hasIcon = true
 			} else {
 				console.warn(`README.md not found for ${dir}`)
