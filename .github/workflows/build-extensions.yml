@@ -17,8 +17,6 @@ jobs:
         with:
           node-version: 20
 
-      - run: npm install
-
       - name: Run build script
         id: build
         continue-on-error: true
