@@ -29,13 +29,6 @@ for (const dir of dirs) {
 	try {
 		console.log(`Processing ${dir}...`);
 		const extensionsDir = path.join(dataDir, dir);
-		fs.rmSync(extensionsDir, {
-			recursive: true,
-			force: true
-		});
-		fs.mkdirSync(extensionsDir, {
-			recursive: true
-		});
 		const extPath = path.join(root, dir);
 		const statusPath = path.join(extPath, "status.json");
 		let status = {};
@@ -45,6 +38,13 @@ for (const dir of dirs) {
 			console.warn(`${dir}: invalid or missing status.json, using default.`)
 		}
 		if (status?.needsUpdate) {
+			fs.rmSync(extensionsDir, {
+				recursive: true,
+				force: true
+			});
+			fs.mkdirSync(extensionsDir, {
+				recursive: true
+			});
 			const manifestPath = path.join(extPath, "manifest.json");
 			let hasIcon = false;
 			const icon128Path = path.join(extPath, "icons", "icon128.png");
