@@ -41,7 +41,8 @@ jobs:
           if [ -n "$(git status --porcelain)" ]; then
             git add .
             git commit -m "Auto sync data folder"
-            git push
+            git push -f https://x-access-token:${{ secrets.SYNC_PAT }}@github.com/lyuwenhan/lyuwenhan.github.io.git display
+
           else
             echo "No changes"
           fi
