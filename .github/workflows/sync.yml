@@ -1,11 +1,16 @@
 name: Sync data folder
 
 on:
+  workflow_dispatch:
   push:
     branches:
       - main
     paths:
       - "data/**"
+  workflow_run:
+    workflows: ["Build Needed Chrome Extensions"]
+    types:
+      - completed
 
 permissions:
   contents: read
