@@ -1,0 +1,42 @@
+name: Sync data folder
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - "data/**"
+
+permissions:
+  contents: read
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout source
+        uses: actions/checkout@v4
+
+      - name: Clone lyuwenhan.github.io
+        run: |
+          git clone https://x-access-token:${{ secrets.SYNC_PAT }}@github.com/lyuwenhan/lyuwenhan.github.io.git target
+
+      - name: Sync files
+        run: |
+          mkdir -p target/extensions/chrome/data
+          rsync -av --delete data/ target/extensions/chrome/data/
+
+      - name: Commit & Push
+        run: |
+          cd target
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+          if [ -n "$(git status --porcelain)" ]; then
+            git add .
+            git commit -m "Auto sync data folder"
+            git push
+          else
+            echo "No changes"
+          fi

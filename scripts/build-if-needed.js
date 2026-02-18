@@ -4,8 +4,8 @@ const {
 	execSync
 } = require("child_process");
 const root = process.cwd();
-const excluded = [".git", ".github", "docs", "node_modules", "scripts"];
-const dataDir = path.join(root, "docs");
+const excluded = [".git", ".github", "data", "node_modules", "scripts"];
+const dataDir = path.join(root, "data");
 if (!fs.existsSync(dataDir)) {
 	fs.mkdirSync(dataDir, {
 		recursive: true
