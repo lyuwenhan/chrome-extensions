@@ -4,7 +4,6 @@ const {
 	execSync
 } = require("child_process");
 const root = process.cwd();
-const excluded = [".git", ".github", "data", "node_modules", "scripts"];
 const dataDir = path.join(root, "data");
 if (!fs.existsSync(dataDir)) {
 	fs.mkdirSync(dataDir, {
@@ -23,6 +22,7 @@ if (fs.existsSync(versionsPath)) {
 const defaultStatus = {
 	needsUpdate: false
 };
+const excluded = [".git", ".github", "data", "node_modules", "scripts"];
 const dirs = fs.readdirSync(root).filter(d => !excluded.includes(d) && fs.existsSync(path.join(root, d, "manifest.json")));
 let hasError = false;
 for (const dir of dirs) {
