@@ -53,7 +53,7 @@ for (const dir of dirs) {
 				console.log(`Icon copied: ${icon128Path} -> ${targetPath}`);
 				hasIcon = true
 			} else {
-				console.warn(`Icon128.png not found for ${dir}`)
+				console.warn(`icon128.png not found for ${dir}`)
 			}
 			const readmePath = path.join(extPath, "README.md");
 			if (fs.existsSync(readmePath)) {
