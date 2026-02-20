@@ -5,11 +5,14 @@ const {
 } = require("child_process");
 const root = process.cwd();
 const dataDir = path.join(root, "data");
-if (!fs.existsSync(dataDir)) {
-	fs.mkdirSync(dataDir, {
-		recursive: true
-	})
-}
+const distDir = path.join(dataDir, "dist");
+const assetsDir = path.join(dataDir, "assets");
+fs.mkdirSync(distDir, {
+	recursive: true
+});
+fs.mkdirSync(assetsDir, {
+	recursive: true
+});
 const versionsPath = path.join(dataDir, "versions.json");
 let versions = {};
 if (fs.existsSync(versionsPath)) {
@@ -28,7 +31,7 @@ let hasError = false;
 for (const dir of dirs) {
 	try {
 		console.log(`Processing ${dir}...`);
-		const extensionsDir = path.join(dataDir, dir);
+		const extensionsDir = path.join(assetsDir, dir);
 		const extPath = path.join(root, dir);
 		const statusPath = path.join(extPath, "status.json");
 		let status = {};
@@ -37,32 +40,27 @@ for (const dir of dirs) {
 		} catch {
 			console.warn(`${dir}: invalid or missing status.json, using default.`)
 		}
-		if (status?.needsUpdate) {
-			fs.rmSync(extensionsDir, {
-				recursive: true,
-				force: true
-			});
+		if (status.needsUpdate) {
 			fs.mkdirSync(extensionsDir, {
 				recursive: true
 			});
 			let hasIcon = false;
-			const icon128Path = path.join(extPath, "icons", "icon128.png");
-			if (fs.existsSync(icon128Path)) {
+			const iconPath = path.join(extPath, "icons", "icon128.png");
+			if (fs.existsSync(iconPath)) {
 				const targetPath = path.join(extensionsDir, "icon.png");
-				fs.copyFileSync(icon128Path, targetPath);
-				console.log(`Icon copied: ${icon128Path} -> ${targetPath}`);
+				fs.copyFileSync(iconPath, targetPath);
+				console.log(`Icon copied: ${iconPath} -> ${targetPath}`);
 				hasIcon = true
 			} else {
-				console.warn(`icon128.png not found for ${dir}`)
+				console.warn(`Icon not found for ${dir}`)
 			}
 			const readmePath = path.join(extPath, "README.md");
 			if (fs.existsSync(readmePath)) {
 				const targetPath = path.join(extensionsDir, "README.md");
 				fs.copyFileSync(readmePath, targetPath);
 				console.log(`README copied: ${readmePath} -> ${targetPath}`);
-				hasIcon = true
 			} else {
-				console.warn(`README.md not found for ${dir}`)
+				console.warn(`README not found for ${dir}`)
 			}
 			const manifestPath = path.join(extPath, "manifest.json");
 			const manifest = JSON.parse(fs.readFileSync(manifestPath, "utf8"));
@@ -85,7 +83,7 @@ for (const dir of dirs) {
 				versions[dir].displayName = displayName;
 				versions[dir].description = description
 			}
-			const outFile = path.join(extensionsDir, `${dir}.zip`);
+			const outFile = path.join(distDir, `${dir}.zip`);
 			console.log(`Packing ${dir} -> ${outFile}`);
 			execSync(`zip -r "${outFile}" . -x "*.git*"`, {
 				cwd: extPath,
@@ -98,7 +96,8 @@ for (const dir of dirs) {
 		fs.writeFileSync(statusPath, JSON.stringify(defaultStatus, null, "\t") + "\n", "utf8")
 	} catch (err) {
 		hasError = true;
-		console.error(`Failed processing ${dir}: ${err.message}`)
+		console.error(`Failed processing ${dir}: ${err.message}`);
+		console.error(err.stack)
 	}
 }
 fs.writeFileSync(versionsPath, JSON.stringify(versions) + "\n", "utf8");
