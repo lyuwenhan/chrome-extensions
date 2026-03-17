@@ -14,3 +14,7 @@ No IP addresses or request data are logged or stored.
 
 ## Permissions
 - Network access to a developer-controlled endpoint (https://my-ip.lyuwenhan.workers.dev) is required solely to retrieve the user’s public IP address.
+
+## License
+
+MIT
