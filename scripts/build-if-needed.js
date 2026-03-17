@@ -85,7 +85,7 @@ for (const dir of dirs) {
 			}
 			const outFile = path.join(distDir, `${dir}.zip`);
 			console.log(`Packing ${dir} -> ${outFile}`);
-			spawnSync("zip", ["-r", outFile, ".", "-x", "./status.json"], {
+			spawnSync("zip", ["-r", outFile, "."], {
 				cwd: extPath,
 				stdio: "inherit"
 			});
