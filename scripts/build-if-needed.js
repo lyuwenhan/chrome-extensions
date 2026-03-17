@@ -1,7 +1,7 @@
 const fs = require("fs");
 const path = require("path");
 const {
-	execSync
+	spawnSync
 } = require("child_process");
 const root = process.cwd();
 const dataDir = path.join(root, "data");
