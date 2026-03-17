@@ -15,5 +15,8 @@
 		"48": "icons/icon48.png",
 		"128": "icons/icon128.png"
 	},
+	"host_permissions": [
+		"https://my-ip.lyuwenhan.workers.dev/*"
+	],
 	"description": "Quickly view your public IP address in a clean popup."
 }

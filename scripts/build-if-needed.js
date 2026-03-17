@@ -85,7 +85,7 @@ for (const dir of dirs) {
 			}
 			const outFile = path.join(distDir, `${dir}.zip`);
 			console.log(`Packing ${dir} -> ${outFile}`);
-			execSync(`zip -r "${outFile}" . -x "*.git*"`, {
+			execSync(`zip -r "${outFile}" . -x "*.git*" -x "status.json"`, {
 				cwd: extPath,
 				stdio: "inherit"
 			});

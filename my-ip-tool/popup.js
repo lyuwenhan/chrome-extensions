@@ -16,7 +16,6 @@ async function loadIP() {
 			const mid = Math.ceil(ip.length / 2);
 			ip = ip.slice(0, mid) + "\n" + ip.slice(mid)
 		}
-		console.log(ip);
 		clearTimeout(loadingTimer);
 		ipEl.textContent = ip
 	} catch (e) {
