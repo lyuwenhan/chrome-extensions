@@ -1,1 +1,11 @@
-{"my-ip-tool":{"version":"1.1.3","hasIcon":true,"href":"https://chromewebstore.google.com/detail/my-ip-tool/ljjgbfofgkekflhnjpkghffchmjgcgjm","displayName":"My IP Tool","description":"Quickly view your public IP address in a clean popup."}}
+{
+	"my-ip-tool": {
+		"version": "1.1.3",
+		"hasIcon": true,
+		"displayName": "My IP Tool",
+		"description": "Quickly view your public IP address in a clean popup.",
+		"link": {
+			"Chrome web store": "https://chromewebstore.google.com/detail/my-ip-tool/ljjgbfofgkekflhnjpkghffchmjgcgjm"
+		}
+	}
+}

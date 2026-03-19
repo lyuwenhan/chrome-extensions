@@ -67,21 +67,23 @@ for (const dir of dirs) {
 			const version = manifest.version;
 			const displayName = manifest.name;
 			const description = manifest.description || "";
-			const isNew = !versions[dir];
-			if (isNew) {
+			if (!versions[dir]) {
 				console.log(`New extension detected: ${dir}`);
 				versions[dir] = {
 					version,
 					hasIcon,
-					href: "",
 					displayName,
-					description
+					description,
+					link: {}
 				}
 			} else {
-				versions[dir].version = version;
-				versions[dir].hasIcon = hasIcon;
-				versions[dir].displayName = displayName;
-				versions[dir].description = description
+				versions[dir] = {
+					version: version ?? versions[dir].version,
+					hasIcon: hasIcon ?? versions[dir].hasIcon,
+					displayName: displayName ?? versions[dir].displayName,
+					description: description ?? versions[dir].description,
+					link: versions[dir].link ?? {}
+				}
 			}
 			const outFile = path.join(distDir, `${dir}.zip`);
 			console.log(`Packing ${dir} -> ${outFile}`);
@@ -100,7 +102,7 @@ for (const dir of dirs) {
 		console.error(err.stack)
 	}
 }
-fs.writeFileSync(versionsPath, JSON.stringify(versions) + "\n", "utf8");
+fs.writeFileSync(versionsPath, JSON.stringify(versions, null, "\t") + "\n", "utf8");
 if (hasError) {
 	process.exit(1)
 }
