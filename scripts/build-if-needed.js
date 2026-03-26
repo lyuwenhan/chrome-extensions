@@ -23,7 +23,8 @@ if (fs.existsSync(versionsPath)) {
 	}
 }
 const defaultStatus = {
-	needsUpdate: false
+	needsUpdate: false,
+	withPack: false
 };
 const excluded = [".git", ".github", "data", "node_modules", "scripts"];
 const dirs = fs.readdirSync(root).filter(d => !excluded.includes(d) && fs.existsSync(path.join(root, d, "manifest.json")));
@@ -58,7 +59,10 @@ for (const dir of dirs) {
 			const readmeFiles = files.filter(name => /^README.*\.md$/.test(name));
 			if (readmeFiles.length > 0) {
 				const readmeDir = path.join(extensionsDir, "README");
-				fs.rmSync(readmeDir, { recursive: true, force: true });
+				fs.rmSync(readmeDir, {
+					recursive: true,
+					force: true
+				});
 				fs.mkdirSync(readmeDir, {
 					recursive: true
 				});
@@ -66,10 +70,18 @@ for (const dir of dirs) {
 					const sourcePath = path.join(extPath, file);
 					const targetPath = path.join(readmeDir, file);
 					fs.copyFileSync(sourcePath, targetPath);
-					console.log(`README copied: ${sourcePath} -> ${targetPath}`);
+					console.log(`README copied: ${sourcePath} -> ${targetPath}`)
 				}
 			} else {
-				console.warn(`README*.md not found for ${dir}`);
+				console.warn(`README*.md not found for ${dir}`)
+			}
+			if (status.withPack) {
+				const outFile = path.join(distDir, `${dir}.zip`);
+				console.log(`Packing ${dir} -> ${outFile}`);
+				spawnSync("zip", ["-r", outFile, "."], {
+					cwd: extPath,
+					stdio: "inherit"
+				})
 			}
 			const manifestPath = path.join(extPath, "manifest.json");
 			const manifest = JSON.parse(fs.readFileSync(manifestPath, "utf8"));
@@ -87,19 +99,13 @@ for (const dir of dirs) {
 				}
 			} else {
 				versions[dir] = {
-					version: version ?? versions[dir].version,
+					version: (status.withPack ? version : null) ?? versions[dir].version,
 					hasIcon: hasIcon ?? versions[dir].hasIcon,
 					displayName: displayName ?? versions[dir].displayName,
 					description: description ?? versions[dir].description,
 					link: versions[dir].link ?? {}
 				}
 			}
-			const outFile = path.join(distDir, `${dir}.zip`);
-			console.log(`Packing ${dir} -> ${outFile}`);
-			spawnSync("zip", ["-r", outFile, "."], {
-				cwd: extPath,
-				stdio: "inherit"
-			});
 			console.log(`${dir} built successfully.`)
 		} else {
 			console.log(`Skip ${dir}: no new content`)
