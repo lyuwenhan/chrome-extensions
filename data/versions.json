@@ -8,7 +8,8 @@
 		"displayName": "My IP Tool",
 		"description": "Quickly view your public IP address in a clean popup.",
 		"link": {
-			"Chrome web store": "https://chromewebstore.google.com/detail/my-ip-tool/ljjgbfofgkekflhnjpkghffchmjgcgjm"
+			"Chrome web store": "https://chromewebstore.google.com/detail/my-ip-tool/ljjgbfofgkekflhnjpkghffchmjgcgjm",
+			"Microsoft Edge Add-ons": "https://microsoftedge.microsoft.com/addons/detail/my-ip-tool/pdhdebnmhkhjdpbeeblcgjoiipdfmfmp"
 		}
 	}
 }
